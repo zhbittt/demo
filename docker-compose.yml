@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+  demo:
+    build: ./demo_django
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./demo_django:/demo_django
+      - /tmp/logs:/tmp
+    command: bash start.sh  # 执行命令，有多种格式
+    restart: always
