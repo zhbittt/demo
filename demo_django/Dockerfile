@@ -9,7 +9,7 @@ WORKDIR /demo_django
 #将当前目录加入到工作目录中
 ADD . /demo_django
 
-RUN pip3 install -r requirements.txt
+RUN pip3 install -r requirements.txt -i http://mirrors.aliyun.com/pypi/simple/  --trusted-host mirrors.aliyun.com
 
 #对外暴露端口
 EXPOSE 80 8080 8000 5000

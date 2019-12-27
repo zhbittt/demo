@@ -10,3 +10,5 @@ services:
       - /tmp/logs:/tmp
     command: bash start.sh  # 执行命令，有多种格式
     restart: always
+    environment:
+      MYSQL_HOST: 'docker.for.mac.host.internal'
