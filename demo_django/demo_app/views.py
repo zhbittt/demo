@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponse, redirect
 from django.http import JsonResponse
 from demo_app.models import UserInfo
 from demo_app.form import LoginForm
-from django.views.decorators.csrf import csrf_exempt
+
 import requests
 import json
 import time
@@ -243,7 +243,6 @@ def applyevent(request):
     return JsonResponse(response)
 
 
-@csrf_exempt
 def applyeventcallback(request):
     print(request.body)
     logger.info(request.body)

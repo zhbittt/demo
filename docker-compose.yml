@@ -11,4 +11,6 @@ services:
     command: bash start.sh  # 执行命令，有多种格式
     restart: always
     environment:
-      MYSQL_HOST: 'docker.for.mac.host.internal'
+      MYSQL_HOST: '139.180.192.55'
+      MYSQL_USER: 'demo'
+      MYSQL_PWD: 'demo'

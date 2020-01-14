@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from django.views.decorators.csrf import csrf_exempt
 
 urlpatterns = [
     path('login', views.login),
@@ -8,5 +9,5 @@ urlpatterns = [
     path('gettoken', views.gettoken),
     path('getapprovaldetail', views.getapprovaldetail),
     path('applyevent', views.applyevent),
-    path('applyeventcallback', views.applyeventcallback),
+    path('applyeventcallback', csrf_exempt(views.applyeventcallback)),
 ]
