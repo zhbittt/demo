@@ -2,6 +2,7 @@ from django.shortcuts import render, HttpResponse, redirect
 from django.http import JsonResponse
 from demo_app.models import UserInfo
 from demo_app.form import LoginForm
+from callback.WXBizMsgCrypt3 import WXBizMsgCrypt
 
 import requests
 import json
@@ -11,7 +12,9 @@ import logging
 
 
 logger = logging.getLogger('collect')
-
+sToken = "nQBHOB96wNsphAmE1K"
+sEncodingAESKey = "SaqMya2MlhCSdb6EIsmEc80rgJolkJWflzmu3XNnShB"
+sCorpID = "ww3035220e283065a8"
 
 def login(request):
     if request.method == 'GET':
@@ -242,11 +245,21 @@ def applyevent(request):
     logging.info(response)
     return JsonResponse(response)
 
+# import xml.etree.cElementTree as ET
+# import sys
 
 def applyeventcallback(request):
-    print(request.body)
-    logger.info(request.body)
-    return HttpResponse('200')
+    wxcpt = WXBizMsgCrypt(sToken, sEncodingAESKey, sCorpID)
+    sVerifyMsgSig = request.GET.get("msg_signature")
+    sVerifyTimeStamp = request.GET.get("timestamp")
+    sVerifyNonce = request.GET.get("nonce")
+    sVerifyEchoStr = request.GET.get("echostr")
+    ret, sEchoStr = wxcpt.VerifyURL(sVerifyMsgSig, sVerifyTimeStamp, sVerifyNonce, sVerifyEchoStr)
+    if (ret != 0):
+        print("ERR: VerifyURL ret: " + str(ret))
+    #验证URL成功，将sEchoStr返回给企业号
+    print(ret, sEchoStr)
+    return HttpResponse(sEchoStr)
 
 
 def wechat(request):
